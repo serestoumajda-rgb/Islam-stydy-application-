@@ -1,0 +1,311 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#087bd2">
+<title>Islam Study</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#eef5fc;color:#102a56;font-family:Arial,"Noto Sans Arabic",sans-serif}
+.app{max-width:500px;margin:auto;min-height:100vh;background:#fff;padding-bottom:82px;box-shadow:0 0 30px #8ca8c933}
+header{background:linear-gradient(145deg,#0758a8,#18a1e8);color:white;padding:30px 20px;border-radius:0 0 32px 32px}
+.brand{font-size:32px;font-weight:900}.brand b{color:#ffd34d}.tag{margin-top:6px;font-size:16px}.welcome{margin-top:20px;background:#ffffffdd;color:#163e6c;border-radius:18px;padding:13px;font-weight:700}
+h2{font-size:21px;margin:20px 18px 12px}.screen{display:none}.screen.active{display:block}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 18px}
+.btn{border:0;border-radius:20px;padding:19px 10px;background:#eef6ff;color:#123b70;font-weight:800;font-size:15px;box-shadow:0 4px 12px #9bb9d733;cursor:pointer}
+.stage{grid-column:span 2;color:white;text-align:right;padding:22px;font-size:17px}.green{background:linear-gradient(135deg,#20a96b,#4aca8b)}.blue{background:linear-gradient(135deg,#147dcc,#40aae9)}.purple{background:linear-gradient(135deg,#7650df,#a274ed)}
+.icon{font-size:30px;display:block;margin-bottom:7px}.top{display:flex;align-items:center;gap:10px;padding:18px}.back{border:0;background:#edf3fb;border-radius:12px;padding:10px 14px;font-size:18px;cursor:pointer}
+.pill{margin:0 18px;background:#eef6ff;border-radius:15px;padding:12px;color:#087bd2;font-weight:800}.tools{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px}.tool{border:1px solid #dbe7f4;background:#fff;border-radius:18px;padding:20px;font-weight:800;font-size:15px;cursor:pointer}
+.progress{margin:18px;background:#f3f8ff;border:1px solid #dce9f7;border-radius:20px;padding:18px}.bar{height:12px;background:#dbe6f0;border-radius:20px;overflow:hidden;margin:10px 0}.bar i{display:block;height:100%;width:0;background:#27b777}
+.quiz{margin:18px;background:#f5f9ff;border:1px solid #dce8f5;border-radius:22px;padding:20px}.answer{width:100%;padding:14px;margin:7px 0;border:2px solid #dce6f2;background:#fff;border-radius:14px;text-align:right;font-size:15px;cursor:pointer}.correct{background:#dff8e9!important;border-color:#2dbb77!important}.wrong{background:#ffe2e2!important;border-color:#df6b6b!important}
+.primary{border:0;background:#087bd2;color:white;border-radius:14px;padding:13px 18px;font-weight:800;cursor:pointer}.result{text-align:center;padding:25px}.big{font-size:48px;font-weight:900;color:#087bd2}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:500px;width:100%;background:#fff;border-top:1px solid #dce4ee;display:flex;justify-content:space-around;padding:10px 2px;z-index:9}nav button{border:0;background:none;font-weight:800;font-size:12px;color:#63728a}
+.note{margin:18px;padding:18px;border-radius:20px;background:#f7fbff;border:1px solid #deebf7;line-height:1.7}
+</style>
+<style>
+#authScreen{
+ position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
+ background:linear-gradient(135deg,#eaf7ff,#f6f0ff,#fff);
+ padding:20px;
+}
+.auth-card{
+ width:min(430px,100%);background:#fff;border-radius:28px;padding:28px;
+ box-shadow:0 18px 55px rgba(40,70,110,.16);text-align:center;
+}
+.auth-logo{font-size:46px;margin-bottom:6px}
+.auth-card h1{margin:0;color:#243b6b;font-size:30px}
+.auth-sub{color:#71809b;margin:7px 0 22px}
+.auth-tabs{display:flex;gap:8px;background:#f1f5fb;padding:5px;border-radius:14px;margin-bottom:18px}
+.auth-tabs button{flex:1;border:0;border-radius:10px;padding:10px;background:transparent;font-weight:700;color:#64748b;cursor:pointer}
+.auth-tabs button.active{background:#fff;color:#3867d6;box-shadow:0 3px 12px rgba(40,70,110,.10)}
+.auth-form{display:grid;gap:12px;text-align:right}
+.auth-form label{font-size:13px;color:#506078;font-weight:700}
+.auth-form input{
+ width:100%;box-sizing:border-box;border:1px solid #dbe4f0;border-radius:13px;padding:13px 14px;
+ font-size:15px;outline:none;background:#fbfdff;
+}
+.auth-form input:focus{border-color:#6ea8fe;box-shadow:0 0 0 3px rgba(110,168,254,.14)}
+.auth-btn{
+ border:0;border-radius:14px;padding:14px;background:#4b7bec;color:#fff;font-weight:800;
+ font-size:16px;cursor:pointer;margin-top:4px
+}
+.auth-btn:hover{filter:brightness(.97)}
+.auth-note{font-size:12px;color:#8a97aa;margin-top:13px;line-height:1.6}
+.auth-error{display:none;color:#c0392b;background:#fff0ef;border-radius:10px;padding:9px;font-size:13px}
+.logout-btn{border:0;background:#fff0f0;color:#d64545;padding:8px 12px;border-radius:10px;font-weight:700;cursor:pointer}
+</style>
+
+<style>
+.panel{padding:18px}.card{background:#fff;border:1px solid #dbe7f4;border-radius:18px;padding:16px;margin:10px 0;box-shadow:0 4px 12px #9bb9d722}.row{display:flex;gap:8px;align-items:center;justify-content:space-between}.danger{border:0;background:#fff0f0;color:#d64545;border-radius:10px;padding:8px 11px;font-weight:800}.input{width:100%;padding:12px;border:1px solid #dbe4f0;border-radius:12px;margin:5px 0 10px;font-size:15px}.select{width:100%;padding:12px;border:1px solid #dbe4f0;border-radius:12px;background:#fff;margin:5px 0 10px;font-size:15px}.empty{padding:28px 15px;text-align:center;color:#71809b;background:#f7fbff;border-radius:18px}
+</style>
+
+<style>
+  html, body { min-height:100%; }
+  body { -webkit-tap-highlight-color: transparent; }
+  button, a, input, select, textarea { touch-action: manipulation; }
+  @media (max-width: 600px) {
+    body { overflow-x:hidden; }
+  }
+</style>
+<script>
+  // Single-file version: keep app data on the device.
+  // This version intentionally needs no external manifest/service-worker files.
+  window.ISLAM_STUDY_SINGLE_FILE = true;
+</script>
+
+
+<style>
+.levelSubjectCard{background:#eef7ff;border:1px solid #d9eafa;border-radius:22px;padding:16px;margin:12px 0;box-shadow:0 8px 20px rgba(30,90,140,.08)}
+.lsTitle{display:flex;align-items:center;gap:10px;font-size:18px;color:#17466d;margin-bottom:12px}.lsTitle span{font-size:28px}
+.lsActions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.lsActions button{border:0;border-radius:13px;padding:11px 5px;background:#fff;color:#126bb0;font-weight:800;font-size:13px;box-shadow:0 3px 10px rgba(0,0,0,.06)}.lsActions button:active{transform:scale(.97)}
+@media(max-width:430px){.lsActions{grid-template-columns:1fr}.lsActions button{padding:12px}}
+</style>
+
+
+<style>
+.contentMenu{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}
+.contentTab{border:0;border-radius:18px;background:#fff;border:1px solid #dbe7f4;padding:15px 8px;color:#087bd2;font-size:22px;box-shadow:0 5px 14px rgba(30,90,140,.08);cursor:pointer}
+.contentTab b{display:block;font-size:14px;margin-top:5px}
+.contentTab small{display:block;color:#718096;font-size:11px;margin-top:4px}
+.contentHint{background:#eef7ff;border-radius:16px;padding:13px;text-align:center;color:#24557a;font-weight:700;margin-top:10px}
+@media(max-width:430px){.contentMenu{grid-template-columns:1fr}.contentTab{padding:13px}}
+</style>
+
+</head><body>
+<div id="authScreen">
+  <div class="auth-card">
+    <div class="auth-logo">📚</div>
+    <h1>Islam Study</h1>
+    <div class="auth-sub">تعلّم، تدرّب، ونجح</div>
+    <div class="auth-tabs">
+      <button id="loginTab" class="active" onclick="showAuth('login')">تسجيل الدخول</button>
+      <button id="registerTab" onclick="showAuth('register')">إنشاء حساب</button>
+    </div>
+    <form id="authForm" class="auth-form" onsubmit="handleAuth(event)">
+      <div>
+        <label>البريد الإلكتروني</label>
+        <input id="authEmail" type="email" placeholder="example@email.com" required>
+      </div>
+      <div>
+        <label>كلمة المرور</label>
+        <input id="authPassword" type="password" placeholder="••••••••" minlength="6" required>
+      </div>
+      <div id="authNameWrap" style="display:none">
+        <label>الاسم</label>
+        <input id="authName" type="text" placeholder="اسمك">
+      </div>
+      <div id="authError" class="auth-error"></div>
+      <button class="auth-btn" id="authSubmit" type="submit">دخول</button>
+    </form>
+    <div class="auth-note">هذا الإصدار يستخدم حسابات محلية على هذا الجهاز. يمكن لاحقاً ربطه بـ Firebase لتسجيل دخول حقيقي ومزامنة الحساب بين الأجهزة.</div>
+  </div>
+</div>
+
+<div id="userBar" style="display:none;position:fixed;top:10px;left:10px;right:10px;z-index:2000;justify-content:space-between;align-items:center;pointer-events:none">
+  <div style="background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:7px 11px;border-radius:12px;box-shadow:0 5px 20px rgba(0,0,0,.08);font-size:13px;color:#445">
+    👋 <span id="userGreeting"></span>
+  </div>
+  <button class="logout-btn" style="pointer-events:auto" onclick="logoutUser()">تسجيل الخروج</button>
+</div>
+<div class="app">
+<section id="home" class="screen active"><header><div class="brand">Islam <b>Study</b></div><div class="tag">تعلّم، تدرّب، ونجح 🚀</div><div class="welcome">🎓 منصتك الدراسية لجميع المستويات</div></header>
+<h2>اختر المرحلة الدراسية</h2><div class="grid">
+<button class="btn stage green" onclick="chooseStage('الابتدائي')">🟢 التعليم الابتدائي<br><small>الأولى إلى السادسة</small></button>
+<button class="btn stage blue" onclick="chooseStage('الثانوي الإعدادي')">🔵 التعليم الثانوي الإعدادي<br><small>الأولى إلى الثالثة</small></button>
+<button class="btn stage purple" onclick="chooseStage('الثانوي التأهيلي')">🟣 التعليم الثانوي التأهيلي<br><small>الأولى إلى الثالثة</small></button></div>
+<div class="progress"><b>📊 تقدمي العام</b><div class="bar"><i id="progressBar"></i></div><span id="progressText">0% — ابدأ أول اختبار</span></div>
+</section>
+
+<section id="levels" class="screen"><div class="top"><button class="back" onclick="home()">←</button><h2 id="stageTitle"></h2></div><div id="levelGrid" class="grid"></div></section>
+<section id="subjects" class="screen"><div class="top"><button class="back" onclick="backStage()">←</button><h2 id="levelTitle"></h2></div><div class="pill">📚 المواد المتاحة لهذا المستوى</div><div id="subjectGrid" class="grid" style="margin-top:14px"></div></section>
+<section id="subject" class="screen"><div class="top"><button class="back" onclick="backLevel()">←</button><h2 id="subjectTitle"></h2></div><div class="pill" id="context"></div>
+<div class="tools"><button class="tool" onclick="lesson()">📖<br>الدروس</button><button class="tool" onclick="startQuiz()">✏️<br>التمارين</button><button class="tool" onclick="startQuiz()">📝<br>الاختبارات</button><button class="tool" onclick="toggleFavorite()">⭐<br>المفضلة</button></div><div class="note" id="info">اختر قسمًا للبدء.</div></section>
+
+<section id="library" class="screen"><div class="top"><button class="back" onclick="home()">←</button><h2>📚 مكتبتي</h2></div><div class="panel"><div id="libraryList"></div></div></section>
+<section id="schedule" class="screen"><div class="top"><button class="back" onclick="home()">←</button><h2>🗓️ جدولي</h2></div><div class="panel"><div class="card"><b>إضافة حصة</b><input id="schSubject" class="input" placeholder="المادة"><select id="schDay" class="select"><option>الإثنين</option><option>الثلاثاء</option><option>الأربعاء</option><option>الخميس</option><option>الجمعة</option><option>السبت</option><option>الأحد</option></select><input id="schTime" class="input" placeholder="الوقت، مثال: 18:00"><button class="primary" onclick="addSchedule()">＋ إضافة</button></div><div id="scheduleList"></div></div></section>
+<section id="achievements" class="screen"><div class="top"><button class="back" onclick="home()">←</button><h2>🏆 إنجازاتي</h2></div><div class="panel" id="achievementBox"></div></section>
+<section id="account" class="screen"><div class="top"><button class="back" onclick="home()">←</button><h2>👤 حسابي</h2></div><div class="panel" id="accountBox"></div></section>
+<section id="quiz" class="screen"><div class="top"><button class="back" onclick="backSubject()">←</button><h2 id="quizTitle"></h2></div><div class="quiz"><b id="counter"></b><h2 id="question"></h2><div id="answers"></div><div id="next"></div></div></section>
+<section id="result" class="screen"><div class="result"><div style="font-size:65px">🏆</div><h2>نتيجة الاختبار</h2><div class="big" id="score"></div><p id="resultMessage"></p><button class="primary" onclick="home()">العودة للرئيسية</button></div></section>
+</div><div style="margin:28px 18px 18px;padding:16px;border-radius:18px;background:linear-gradient(135deg,#eef6ff,#f7f2ff);border:1px solid #dbe7f5;text-align:center;color:#243447"><div style="font-size:20px;font-weight:900">Islam Study</div><div style="margin-top:6px">من تطوير <b>Islam Houssaini</b></div><div style="font-size:12px;opacity:.65;margin-top:5px">© 2026 Islam Houssaini</div></div><nav><button onclick="home()">🏠<br>الرئيسية</button><button onclick="openLibrary()">📚<br>مكتبتي</button><button onclick="openSchedule()">🗓️<br>جدولي</button><button onclick="openAchievements()">🏆<br>إنجازاتي</button><button onclick="openAccount()">👤<br>حسابي</button></nav>
+<script>
+const D={"levels": {"الابتدائي": ["الأولى ابتدائي", "الثانية ابتدائي", "الثالثة ابتدائي", "الرابعة ابتدائي", "الخامسة ابتدائي", "السادسة ابتدائي"], "الثانوي الإعدادي": ["الأولى إعدادي", "الثانية إعدادي", "الثالثة إعدادي"], "الثانوي التأهيلي": ["الأولى ثانوي تأهيلي", "الثانية ثانوي تأهيلي", "الثالثة ثانوي تأهيلي"]}, "subjects": {"الابتدائي": ["اللغة العربية", "الرياضيات", "النشاط العلمي", "التربية الإسلامية", "الفرنسية", "الاجتماعيات"], "الثانوي الإعدادي": ["اللغة العربية", "الرياضيات", "الفيزياء والكيمياء", "علوم الحياة والأرض", "الفرنسية", "الإنجليزية", "الاجتماعيات", "التربية الإسلامية"], "الثانوي التأهيلي": ["اللغة العربية", "الرياضيات", "الفيزياء والكيمياء", "علوم الحياة والأرض", "الفرنسية", "الإنجليزية", "التاريخ والجغرافيا", "التربية الإسلامية", "الفلسفة"]}, "questions": {"الرياضيات": [["ما ناتج 7 × 8؟", ["54", "56", "64", "48"], 1], ["إذا كان x + 5 = 12 فما قيمة x؟", ["5", "6", "7", "8"], 2], ["مساحة مستطيل طوله 6 cm وعرضه 4 cm هي:", ["10 cm²", "20 cm²", "24 cm²", "28 cm²"], 2], ["ما محيط مربع ضلعه 5 cm؟", ["10 cm", "15 cm", "20 cm", "25 cm"], 2], ["ما ناتج 3²؟", ["6", "9", "12", "18"], 1]], "الفيزياء والكيمياء": [["ما وحدة قياس الكتلة في النظام الدولي؟", ["المتر", "الكيلوغرام", "اللتر", "الثانية"], 1], ["الصيغة الكيميائية للماء هي:", ["CO₂", "O₂", "H₂O", "NaCl"], 2], ["الجهاز الذي يقيس شدة التيار الكهربائي هو:", ["الفولتميتر", "الأمبيرمتر", "الميزان", "الترمومتر"], 1], ["الكثافة تساوي:", ["الكتلة ÷ الحجم", "الحجم ÷ الكتلة", "الكتلة × الحجم", "الكتلة + الحجم"], 0], ["أي حالة للمادة لها شكل وحجم ثابتان؟", ["الغازية", "السائلة", "الصلبة", "لا شيء"], 2]], "علوم الحياة والأرض": [["أين تتم عملية التركيب الضوئي أساسًا؟", ["الجذور", "الأوراق", "الثمار", "البذور"], 1], ["العضو الرئيسي في التنفس هو:", ["القلب", "الرئتان", "المعدة", "الكبد"], 1], ["أي جزء يمتص الماء والأملاح المعدنية؟", ["الزهرة", "الساق", "الجذر", "الثمرة"], 2], ["التكاثر دون اتحاد أمشاج يسمى:", ["جنسيًا", "لاجنسيًا", "تنفسًا", "هضمًا"], 1], ["الكلوروفيل يوجد أساسًا في:", ["خلايا الأوراق الخضراء", "العظام", "الدم", "الجذور فقط"], 0]], "اللغة العربية": [["كلمة «مدرسة» هي:", ["فعل", "حرف", "اسم", "ضمير"], 2], ["جمع «كتاب» هو:", ["كاتبان", "كتب", "كاتب", "مكتبة"], 1], ["«كتب» فعل:", ["ماضٍ", "مضارع", "أمر", "اسم"], 0], ["في «الطالب المجتهد» كلمة «المجتهد» هي:", ["فعل", "صفة", "حرف", "ضمير"], 1], ["الجملة التي تبدأ بفعل تسمى:", ["اسمية", "فعلية", "شرطية", "استفهامية"], 1]], "الفرنسية": [["Le pluriel de « un livre » est :", ["des livre", "des livres", "un livres", "les livre"], 1], ["Le contraire de « grand » est :", ["petit", "fort", "long", "haut"], 0], ["« Nous mangeons » est au :", ["futur", "présent", "passé", "conditionnel"], 1], ["« Elle » est un :", ["nom", "adjectif", "pronom", "verbe"], 2], ["Le verbe dans « Les élèves travaillent » est :", ["Les", "élèves", "travaillent", "les"], 2]], "التربية الإسلامية": [["عدد الصلوات المفروضة في اليوم والليلة هو:", ["3", "4", "5", "6"], 2], ["شهر الصيام هو:", ["محرم", "رمضان", "شوال", "رجب"], 1], ["الزكاة من:", ["أركان الإسلام", "أركان الإيمان", "العادات", "النوافل"], 0], ["عدد أركان الإسلام هو:", ["3", "4", "5", "6"], 2], ["القرآن الكريم أنزل على:", ["موسى عليه السلام", "عيسى عليه السلام", "محمد ﷺ", "إبراهيم عليه السلام"], 2]], "الإنجليزية": [["Choose the correct form: « I ___ a student. »", ["am", "is", "are", "be"], 0], ["The plural of « book » is:", ["bookes", "books", "book", "bookses"], 1], ["« She plays football. » is in the:", ["present simple", "past simple", "future", "present continuous"], 0], ["The opposite of « big » is:", ["long", "small", "fast", "old"], 1], ["Choose: « They ___ happy. »", ["is", "am", "are", "be"], 2]], "الاجتماعيات": [["ما اسم القارة التي ينتمي إليها المغرب؟", ["آسيا", "إفريقيا", "أوروبا", "أمريكا"], 1], ["ما عاصمة المغرب؟", ["الدار البيضاء", "فاس", "الرباط", "مراكش"], 2], ["التاريخ يهتم أساسًا بدراسة:", ["أحداث الماضي", "الطقس فقط", "الكائنات الحية", "الحساب"], 0], ["الخريطة تمثل:", ["مجالًا جغرافيًا", "كتابًا أدبيًا", "تجربة كيميائية", "آلة"], 0], ["المواطنة ترتبط بـ:", ["الحقوق والواجبات", "الرياضة فقط", "الطقس", "الحساب"], 0]], "الفلسفة": [["الفلسفة تهتم بـ:", ["التفكير والنقد وطرح الأسئلة", "الحساب فقط", "حفظ الكلمات فقط", "الرياضة"], 0], ["الحجاج يعتمد على:", ["الأدلة والحجج", "الصدفة فقط", "الرسم فقط", "الحفظ دون فهم"], 0], ["السؤال الفلسفي يتميز غالبًا بـ:", ["الانفتاح على التفكير", "جواب واحد محفوظ دائمًا", "غياب السؤال", "الحساب فقط"], 0], ["النقد يعني:", ["فحص الأفكار وتحليلها", "رفض كل شيء", "الحفظ", "النسخ"], 0], ["الحوار يساعد على:", ["تبادل الأفكار", "منع التفكير", "حذف الأدلة", "إلغاء السؤال"], 0]], "التاريخ والجغرافيا": [["ما عاصمة المغرب؟", ["الرباط", "فاس", "طنجة", "مراكش"], 0], ["الجغرافيا تدرس:", ["المجالات والظواهر الجغرافية", "الأدب فقط", "الكيمياء فقط", "النحو"], 0], ["الخريطة وسيلة لتمثيل:", ["مجال جغرافي", "معادلة", "قصيدة", "تجربة"], 0], ["التاريخ يدرس:", ["أحداث الماضي", "المستقبل فقط", "الطقس فقط", "الحساب"], 0], ["السكان جزء من دراسة:", ["الجغرافيا البشرية", "الكيمياء", "النحو", "الفيزياء"], 0]], "النشاط العلمي": [["ما اسم القارة التي ينتمي إليها المغرب؟", ["آسيا", "إفريقيا", "أوروبا", "أمريكا"], 1], ["ما عاصمة المغرب؟", ["الدار البيضاء", "فاس", "الرباط", "مراكش"], 2], ["التاريخ يهتم أساسًا بدراسة:", ["أحداث الماضي", "الطقس فقط", "الكائنات الحية", "الحساب"], 0], ["الخريطة تمثل:", ["مجالًا جغرافيًا", "كتابًا أدبيًا", "تجربة كيميائية", "آلة"], 0], ["المواطنة ترتبط بـ:", ["الحقوق والواجبات", "الرياضة فقط", "الطقس", "الحساب"], 0]]}};
+const LESSONS={"الرياضيات": [{"title": "الأعداد والعمليات", "body": "مراجعة العمليات الأساسية وترتيب إنجازها، مع استعمال الأقواس والأسس البسيطة."}, {"title": "التناسبية", "body": "لفهم التناسبية نستعمل معامل التناسب ونحسب القيمة المجهولة باستعمال الضرب التبادلي عند الحاجة."}, {"title": "الهندسة والمساحات", "body": "المستطيل: المساحة = الطول × العرض. المربع: المساحة = الضلع × الضلع، والمحيط = 4 × الضلع."}], "الفيزياء والكيمياء": [{"title": "الكتلة والحجم والكتلة الحجمية", "body": "الكتلة تقاس غالبًا بالكيلوغرام أو الغرام، والحجم باللتر أو السنتيمتر المكعب. الكتلة الحجمية = الكتلة ÷ الحجم."}, {"title": "الكهرباء", "body": "شدة التيار تقاس بالأمبير بواسطة الأمبيرمتر، والتوتر يقاس بالفولت بواسطة الفولتميتر."}, {"title": "المادة والتحولات", "body": "المادة توجد في حالات صلبة وسائلة وغازية، ويمكن أن تنتقل من حالة إلى أخرى أثناء التحولات الفيزيائية."}], "علوم الحياة والأرض": [{"title": "التغذية عند الإنسان", "body": "يحتاج الجسم إلى مواد غذائية وماء وأملاح معدنية وطاقة للقيام بوظائفه والنمو."}, {"title": "التنفس والتبادلات الغازية", "body": "تتم التبادلات الغازية التنفسية أساسًا على مستوى الرئتين، حيث يأخذ الجسم الأكسجين ويطرح ثاني أكسيد الكربون."}, {"title": "التكاثر عند الكائنات الحية", "body": "التكاثر قد يكون جنسيًا أو لاجنسيًا حسب الكائن الحي وطريقة إنتاج أفراد جديدة."}], "اللغة العربية": [{"title": "الجملة الاسمية والفعلية", "body": "الجملة الاسمية تبدأ غالبًا باسم وتتكون من مبتدأ وخبر، والجملة الفعلية تبدأ بفعل وتتكون من فعل وفاعل وقد يأتي معها مفعول به."}, {"title": "أنواع الكلمة", "body": "الكلمة في العربية: اسم أو فعل أو حرف. ويمكن التمييز بينها من خلال معناها وموقعها في الجملة."}, {"title": "الصفة", "body": "الصفة تتبع الموصوف في التعريف والتنكير والجنس والعدد، مثل: تلميذ مجتهد، تلميذة مجتهدة."}], "الفرنسية": [{"title": "Le présent", "body": "Le présent sert à parler d'une action habituelle ou actuelle. Exemple: Je travaille et nous étudions."}, {"title": "Le pluriel", "body": "On forme souvent le pluriel en ajoutant -s: un livre → des livres. Il existe aussi des formes particulières."}, {"title": "Les pronoms personnels", "body": "Les pronoms sujets principaux sont: je, tu, il/elle, nous, vous, ils/elles."}], "الإنجليزية": [{"title": "Verb to be", "body": "I am, you are, he/she/it is, we are, they are. Example: I am a student."}, {"title": "Present simple", "body": "We use the present simple for habits and facts. Example: I play football. She plays football."}, {"title": "Plural nouns", "body": "Many English nouns take -s in the plural: book → books, student → students."}], "التربية الإسلامية": [{"title": "أركان الإسلام", "body": "أركان الإسلام خمسة: الشهادتان، الصلاة، الزكاة، الصوم، والحج لمن استطاع إليه سبيلًا."}, {"title": "الطهارة والصلاة", "body": "الطهارة شرط مهم للصلاة، وتؤدى الصلاة وفق أوقاتها وأركانها وواجباتها."}, {"title": "الأخلاق الإسلامية", "body": "من الأخلاق التي تحث عليها الشريعة الصدق والأمانة والإحسان واحترام الآخرين."}], "الاجتماعيات": [{"title": "المجال الجغرافي", "body": "الجغرافيا تدرس المجالات والظواهر الطبيعية والبشرية وتستعمل الخرائط والوثائق لفهمها."}, {"title": "التاريخ", "body": "يهتم التاريخ بدراسة أحداث الماضي وترتيبها زمنيًا وتحليل أسبابها ونتائجها."}, {"title": "المواطنة", "body": "المواطنة ترتبط بالحقوق والواجبات والمشاركة المسؤولة واحترام القانون."}], "التاريخ والجغرافيا": [{"title": "دراسة المجال", "body": "الجغرافيا تدرس المجال الطبيعي والبشري وتستعمل الخرائط والجداول والرسوم البيانية."}, {"title": "منهجية دراسة وثيقة تاريخية", "body": "نحدد نوع الوثيقة ومصدرها وتاريخها ثم نستخرج المعلومات ونفسرها ونستنتج."}, {"title": "السكان والمجال", "body": "تساعد دراسة السكان على فهم التوزيع والكثافة والحركية الديموغرافية."}], "الفلسفة": [{"title": "السؤال الفلسفي", "body": "السؤال الفلسفي يفتح مجالًا للتفكير والتحليل والمناقشة، ولا يقتصر على جواب محفوظ واحد."}, {"title": "الحجاج", "body": "الحجاج يعتمد على تنظيم الأفكار وتقديم حجج وأمثلة وأدلة لدعم موقف أو مناقشته."}, {"title": "النقد والحوار", "body": "النقد يعني فحص الأفكار وتحليلها، والحوار يسمح بمقارنة المواقف وتوضيح الحجج."}], "النشاط العلمي": [{"title": "الكائنات الحية", "body": "الكائنات الحية تتميز بعمليات مثل التغذية والنمو والتنفس والتكاثر."}, {"title": "المادة وخصائصها", "body": "للمواد خصائص مختلفة، ويمكن أن تتغير حالتها بفعل التسخين أو التبريد."}, {"title": "البيئة", "body": "تضم البيئة كائنات حية وعناصر غير حية، وتوجد بينها علاقات وتأثيرات متبادلة."}]};
+let stage='',level='',subject='',qs=[],qIndex=0,score=0,answered=false;
+let stats=JSON.parse(localStorage.getItem('islamStudyStats')||'{"done":0,"correct":0}');
+function save(){localStorage.setItem('islamStudyStats',JSON.stringify(stats));let p=stats.done?Math.round(stats.correct/stats.done*100):0;document.getElementById('progressBar').style.width=p+'%';document.getElementById('progressText').textContent=p+'% — '+stats.done+' سؤال تمت إجابته';}
+function hide(){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'))}
+function home(){hide();document.getElementById('home').classList.add('active');save()}
+function chooseStage(s){
+  stage=s; hide();
+  document.getElementById('levels').classList.add('active');
+  document.getElementById('stageTitle').textContent=s;
+  document.getElementById('levelGrid').innerHTML=D.levels[s].map(l =>
+    '<button type="button" class="btn" onclick=\'chooseLevel('+JSON.stringify(l)+')\'>🎓<br>'+l+'<small style="display:block;margin-top:8px">المواد والدروس والتمارين</small></button>'
+  ).join('');
+}
+function chooseLevel(l){
+  level=l; hide(); document.getElementById('subjects').classList.add('active');
+  document.getElementById('levelTitle').textContent=l;
+  let arr=D.subjects[stage]||[];
+  const icons=['📐','⚛️','🌿','📚','🇫🇷','🇬🇧','🌍','🕌','🧠'];
+  document.getElementById('subjectGrid').innerHTML=arr.map((s,i)=>`<div class="levelSubjectCard">
+    <div class="lsTitle"><span>${icons[i%icons.length]}</span><b>${s}</b></div>
+    <div class="lsActions">
+      <button type="button" onclick='openContent(${JSON.stringify(s)},"lesson")'>📖 الدروس</button>
+      <button type="button" onclick='openContent(${JSON.stringify(s)},"exercise")'>✏️ التمارين</button>
+      <button type="button" onclick='openContent(${JSON.stringify(s)},"exam")'>📝 الامتحانات</button>
+    </div>
+  </div>`).join('');
+}
+function openContent(s,type){
+  subject=s;
+  hide();
+  document.getElementById('subject').classList.add('active');
+  document.getElementById('subjectTitle').textContent=s;
+  document.getElementById('context').textContent=level+' • '+s;
+  document.getElementById('info').innerHTML =
+    '<div class="contentMenu">' +
+      '<button class="contentTab" onclick="lesson()">📖<br><b>الدروس</b><small>شرح ومراجعة</small></button>' +
+      '<button class="contentTab" onclick="startQuiz()">✏️<br><b>التمارين</b><small>تدرب وصحح</small></button>' +
+      '<button class="contentTab" onclick="startQuiz()">📝<br><b>الامتحانات</b><small>اختبر نفسك</small></button>' +
+    '</div>' +
+    '<div class="contentHint">اختر واحدًا من الأقسام الثلاثة للبدء 👇</div>';
+  if(type==='lesson') lesson();
+  else startQuiz();
+}
+function chooseSubject(s){subject=s;hide();document.getElementById('subject').classList.add('active');document.getElementById('subjectTitle').textContent=s;document.getElementById('context').textContent=level+' • '+s}
+function backStage(){chooseStage(stage)} function backLevel(){chooseLevel(level)} function backSubject(){chooseSubject(subject)}
+function lesson(){
+  const list=LESSONS[subject]||[{"title":"مقدمة","body":"سيتم إضافة الدروس التفصيلية لهذا المقرر تدريجيًا."}];
+  document.getElementById('info').innerHTML='<div style="font-size:20px;font-weight:900;margin-bottom:12px">📖 دروس '+subject+'</div>'+
+    '<div style="font-size:13px;color:#66758a;margin-bottom:14px">'+level+' • اختر درسًا للمراجعة</div>'+
+    list.map((x,i)=>'<div style="background:#fff;border:1px solid #dbe7f4;border-radius:18px;padding:16px;margin:10px 0;box-shadow:0 4px 12px #9bb9d722">'+
+      '<div style="font-weight:900;font-size:16px;color:#087bd2">الدرس '+(i+1)+': '+x.title+'</div>'+
+      '<p style="line-height:1.8;margin:9px 0 0">'+x.body+'</p><button class="primary" style="margin-top:10px" onclick="saveLesson('+i+')">⭐ حفظ في مكتبتي</button></div>').join('')+
+    '<button class="primary" style="margin-top:8px" onclick="startQuiz()">✏️ تدرب على '+subject+'</button>';
+}
+
+function startExam(){
+  startQuiz();
+}
+
+function startQuiz(){qs=D.questions[subject]||D.questions['الرياضيات'];qIndex=0;score=0;hide();document.getElementById('quiz').classList.add('active');renderQuestion()}
+function renderQuestion(){answered=false;let q=qs[qIndex];document.getElementById('quizTitle').textContent=subject;document.getElementById('counter').textContent='السؤال '+(qIndex+1)+' من '+qs.length;document.getElementById('question').textContent=q[0];document.getElementById('answers').innerHTML=q[1].map((a,i)=>'<button class="answer" onclick="answer('+i+')">'+a+'</button>').join('');document.getElementById('next').innerHTML=''}
+function answer(i){if(answered)return;answered=true;let q=qs[qIndex],b=document.querySelectorAll('.answer');stats.done++;if(i===q[2]){score++;stats.correct++;b[i].classList.add('correct')}else{b[i].classList.add('wrong');b[q[2]].classList.add('correct')}save();document.getElementById('next').innerHTML='<br><button class="primary" onclick="nextQuestion()">'+(qIndex===qs.length-1?'عرض النتيجة':'السؤال التالي')+'</button>'}
+function nextQuestion(){qIndex++;if(qIndex<qs.length)renderQuestion();else showResult()}
+function showResult(){hide();document.getElementById('result').classList.add('active');let p=Math.round(score/qs.length*100);document.getElementById('score').textContent=score+'/'+qs.length+' ('+p+'%)';document.getElementById('resultMessage').textContent=p>=80?'ممتاز! 🌟 استمر على هذا المستوى.':p>=50?'جيد جدًا! 💪 المزيد من التدريب سيحسن نتيجتك.':'راجع الدرس وحاول مرة أخرى! 📚'}
+save();
+
+let library=JSON.parse(localStorage.getItem('islamStudyLibrary')||'[]');
+let scheduleData=JSON.parse(localStorage.getItem('islamStudySchedule')||'[]');
+let favorites=JSON.parse(localStorage.getItem('islamStudyFavorites')||'[]');
+function persist(){localStorage.setItem('islamStudyLibrary',JSON.stringify(library));localStorage.setItem('islamStudySchedule',JSON.stringify(scheduleData));localStorage.setItem('islamStudyFavorites',JSON.stringify(favorites));}
+function openLibrary(){hide();document.getElementById('library').classList.add('active');renderLibrary()}
+function saveLesson(i){const list=LESSONS[subject]||[];const x=list[i];if(!x)return;const id=stage+'|'+level+'|'+subject+'|'+x.title;if(!library.some(a=>a.id===id)){library.push({id,type:'lesson',stage,level,subject,title:x.title,body:x.body});persist();alert('⭐ تم حفظ الدرس في مكتبتك');}else alert('هذا الدرس محفوظ من قبل.');renderLibrary()}
+function removeLibrary(id){library=library.filter(x=>x.id!==id);persist();renderLibrary()}
+function renderLibrary(){const el=document.getElementById('libraryList');if(!library.length){el.innerHTML='<div class="empty">📚 مكتبتك فارغة الآن.<br>ادخل إلى أي مادة وافتح درسًا ثم اضغط «حفظ في مكتبتي».</div>';return;}el.innerHTML=library.map(x=>'<div class="card"><div class="row"><b>📖 '+x.title+'</b><button class="danger" onclick="removeLibrary('+JSON.stringify(x.id)+')">حذف</button></div><div style="color:#687890;font-size:13px;margin:6px 0">'+x.level+' • '+x.subject+'</div><p style="line-height:1.8">'+x.body+'</p></div>').join('')}
+function toggleFavorite(){const id=stage+'|'+level+'|'+subject;if(favorites.includes(id)){favorites=favorites.filter(x=>x!==id);alert('تمت إزالة المادة من المفضلة.')}else{favorites.push(id);alert('⭐ تمت إضافة المادة إلى المفضلة.')}persist()}
+function openSchedule(){hide();document.getElementById('schedule').classList.add('active');renderSchedule()}
+function addSchedule(){const sub=document.getElementById('schSubject').value.trim(),day=document.getElementById('schDay').value,time=document.getElementById('schTime').value.trim();if(!sub||!time){alert('اكتب المادة والوقت أولاً.');return;}scheduleData.push({id:Date.now(),subject:sub,day,time});persist();document.getElementById('schSubject').value='';document.getElementById('schTime').value='';renderSchedule()}
+function removeSchedule(id){scheduleData=scheduleData.filter(x=>x.id!==id);persist();renderSchedule()}
+function renderSchedule(){const el=document.getElementById('scheduleList');if(!scheduleData.length){el.innerHTML='<div class="empty">🗓️ لا توجد حصص بعد. أضف حصص المراجعة الخاصة بك.</div>';return;}const days=['الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت','الأحد'];el.innerHTML=days.map(d=>{const a=scheduleData.filter(x=>x.day===d);if(!a.length)return '';return '<h3>'+d+'</h3>'+a.sort((x,y)=>x.time.localeCompare(y.time)).map(x=>'<div class="card"><div class="row"><b>📘 '+x.subject+'</b><button class="danger" onclick="removeSchedule('+x.id+')">حذف</button></div><div>⏰ '+x.time+'</div></div>').join('')}).join('')||'<div class="empty">لا توجد حصص.</div>'}
+function openAchievements(){hide();document.getElementById('achievements').classList.add('active');const p=stats.done?Math.round(stats.correct/stats.done*100):0;document.getElementById('achievementBox').innerHTML='<div class="card" style="text-align:center"><div style="font-size:55px">🏆</div><h2>تقدّمك</h2><div class="big">'+p+'%</div><p>إجابات صحيحة: <b>'+stats.correct+'</b><br>أسئلة تمت الإجابة عنها: <b>'+stats.done+'</b></p></div><div class="card">🎯 '+(stats.done>=20?'إنجاز: 20 سؤالًا أو أكثر':'أجب عن 20 سؤالًا لفتح إنجاز جديد')+'</div>'}
+function openAccount(){hide();document.getElementById('account').classList.add('active');renderAccount()}
+function renderAccount(){let email=localStorage.getItem('islamStudySession')||'';let a={};try{a=JSON.parse(localStorage.getItem('islamStudyAccounts')||'{}')}catch(e){}let u=a[email]||{name:'مستخدم'};document.getElementById('accountBox').innerHTML='<div class="card"><div style="font-size:48px;text-align:center">👤</div><h2 style="text-align:center;margin:10px">'+(u.name||'مستخدم')+'</h2><p><b>البريد:</b> '+email+'</p><p><b>النتيجة العامة:</b> '+(stats.done?Math.round(stats.correct/stats.done*100):0)+'%</p><button class="primary" onclick="editAccount()">✏️ تعديل الاسم</button> <button class="danger" onclick="logoutUser()">تسجيل الخروج</button></div>'}
+function editAccount(){let email=localStorage.getItem('islamStudySession');let a=JSON.parse(localStorage.getItem('islamStudyAccounts')||'{}');if(!a[email])return;let n=prompt('اكتب اسمك الجديد:',a[email].name||'');if(n&&n.trim()){a[email].name=n.trim();localStorage.setItem('islamStudyAccounts',JSON.stringify(a));document.getElementById('userGreeting').textContent='مرحباً '+a[email].name;renderAccount()}}
+</script>
+<script>
+(function(){
+  const ACC_KEY='islamStudyAccounts';
+  const SESSION_KEY='islamStudySession';
+  let authMode='login';
+
+  function accounts(){
+    try{return JSON.parse(localStorage.getItem(ACC_KEY)||'{}')}catch(e){return {}}
+  }
+  function saveAccounts(a){localStorage.setItem(ACC_KEY,JSON.stringify(a));}
+
+  window.showAuth=function(mode){
+    authMode=mode;
+    document.getElementById('loginTab').classList.toggle('active',mode==='login');
+    document.getElementById('registerTab').classList.toggle('active',mode==='register');
+    document.getElementById('authNameWrap').style.display=mode==='register'?'block':'none';
+    document.getElementById('authSubmit').textContent=mode==='login'?'دخول':'إنشاء الحساب';
+    document.getElementById('authError').style.display='none';
+  };
+
+  function error(msg){
+    const e=document.getElementById('authError'); e.textContent=msg; e.style.display='block';
+  }
+
+  window.handleAuth=function(ev){
+    ev.preventDefault();
+    const email=document.getElementById('authEmail').value.trim().toLowerCase();
+    const password=document.getElementById('authPassword').value;
+    const name=document.getElementById('authName').value.trim();
+    if(password.length<6){error('كلمة المرور يجب أن تكون 6 أحرف على الأقل.');return;}
+    const a=accounts();
+
+    if(authMode==='register'){
+      if(a[email]){error('هذا البريد مسجل من قبل. اختر تسجيل الدخول.');return;}
+      a[email]={name:name||email.split('@')[0],password:password};
+      saveAccounts(a);
+      localStorage.setItem(SESSION_KEY,email);
+      showApp(email);
+    }else{
+      if(!a[email] || a[email].password!==password){error('البريد الإلكتروني أو كلمة المرور غير صحيحة.');return;}
+      localStorage.setItem(SESSION_KEY,email);
+      showApp(email);
+    }
+  };
+
+  window.logoutUser=function(){
+    localStorage.removeItem(SESSION_KEY);
+    document.getElementById('userBar').style.display='none';
+    document.getElementById('authScreen').style.display='flex';
+    document.getElementById('authForm').reset();
+    showAuth('login');
+  };
+
+  function showApp(email){
+    const a=accounts(), user=a[email]||{name:email};
+    document.getElementById('authScreen').style.display='none';
+    document.getElementById('userBar').style.display='flex';
+    document.getElementById('userGreeting').textContent='مرحباً '+user.name;
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){
+    const email=localStorage.getItem(SESSION_KEY);
+    if(email && accounts()[email]) showApp(email);
+    else document.getElementById('authScreen').style.display='flex';
+  });
+})();
+</script>
+
+<style>
+#islam-study-splash{position:fixed;inset:0;z-index:999999;background:linear-gradient(180deg,#f8fcff,#eef8ff);display:flex;align-items:center;justify-content:center;transition:opacity .45s ease,visibility .45s ease}
+#islam-study-splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+.iss-box{width:min(92vw,430px);text-align:center;font-family:Arial,sans-serif;color:#123b67}.iss-logo{width:170px;height:170px;margin:auto;display:block}.iss-title{font-size:44px;font-weight:800;margin:15px 0}.iss-title span{color:#087bd2}.iss-author-ar{font-size:24px;font-weight:700;margin:12px}.iss-author-fr{font-size:18px}.iss-tag-ar{font-size:22px;color:#087bd2;font-weight:700;margin-top:25px}.iss-tag-fr{font-size:16px;color:#087bd2;margin-top:5px}.iss-line{width:170px;height:7px;border-radius:20px;background:#dcefff;margin:24px auto;overflow:hidden}.iss-line:after{content:"";display:block;width:65%;height:100%;background:#087bd2;border-radius:20px;animation:load 1.5s infinite}@keyframes load{0%{transform:translateX(-160%)}100%{transform:translateX(160%)}}
+</style>
+<div id="islam-study-splash"><div class="iss-box">
+<svg class="iss-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="88" fill="#087bd2"/><path d="M35 118c20-43 43-64 65-64s45 21 65 64c-20-13-41-19-65-19s-45 6-65 19Z" fill="#fff"/><path d="M30 120h140v14H30z" fill="#ffc33d"/><path d="M55 136h90v12H55z" fill="#fff"/><path d="M60 60h80l-12 28H72z" fill="#123b67"/><path d="M100 47v19" stroke="#ffc33d" stroke-width="6" stroke-linecap="round"/><circle cx="100" cy="43" r="6" fill="#ffc33d"/><path d="M57 150h86l-10 12H67z" fill="#ffc33d"/></svg>
+<h1 class="iss-title"><span>Islam</span> Study</h1><div class="iss-author-ar">من صنع إسلام حوسيني</div><div class="iss-author-fr">Développé par Islam Houssaini</div><div class="iss-tag-ar">بالعلم نرتقي</div><div class="iss-tag-fr">Ensemble vers un meilleur avenir</div><div class="iss-line"></div>
+</div></div>
+<script>(function(){setTimeout(function(){var s=document.getElementById('islam-study-splash');if(s){s.classList.add('hide');setTimeout(function(){s.remove()},500)}},1800)})();</script>
+</body></html>
